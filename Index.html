@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+  }
+
+  .heart {
+    position: absolute;
+    animation: floatUp 6s linear infinite;
+  }
+
+  @keyframes floatUp {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+  }
+
+  .container {
+    background: white;
+    padding: 60px;
+    width: 550px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    z-index: 2;
+  }
+
+  h1 {
+    color: #ff4d6d;
+    font-size: 34px;
+  }
+
+  .teddy {
+    width: 190px;
+    margin: 25px 0;
+  }
+
+  .buttons {
+    position: relative;
+    height: 140px;
+    margin-top: 30px;
+    border-radius: 20px;
+  }
+
+  button {
+    padding: 16px 45px;
+    font-size: 22px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    transition: left 0.25s ease, top 0.25s ease;
+  }
+
+  #yesBtn {
+    background: #ff4d6d;
+    color: white;
+    left: 60px;
+    top: 40px;
+  }
+
+  #noBtn {
+    background: #d3d3d3;
+    left: 300px;
+    top: 40px;
+  }
+
+  .result {
+    display: none;
+  }
+
+  .flowers {
+    font-size: 48px;
+    margin-top: 20px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="main">
+  <h1>Shall we go out together on Valentine’s Day? 😊</h1>
+
+  <img src="/images/iimg3.jpg" class="teddy">
+
+  <div class="buttons" id="box">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 😜</button>
+  </div>
+      <h5>Oops! That No button is shy 🫣</h5>
+
+</div>
+
+<div class="container result" id="result">
+  <h1>Finally!! 😍💖</h1>
+  <p>You made me the happiest person 🥰</p>
+  <div class="flowers">🌸🌹🌷💐🌺</div>
+  <img src="/images/gif01.gif" class="teddy">
+</div>
+
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const box = document.getElementById("box");
+  const yesBtn = document.getElementById("yesBtn");
+  const main = document.getElementById("main");
+  const result = document.getElementById("result");
+box.addEventListener("mousemove", (e) => {
+  const rect = noBtn.getBoundingClientRect();
+  const distanceX = Math.abs(e.clientX - (rect.left + rect.width / 2));
+  const distanceY = Math.abs(e.clientY - (rect.top + rect.height / 2));
+
+  const triggerDistance = 150; // escape sensitivity
+
+  if (distanceX < triggerDistance && distanceY < triggerDistance) {
+    escapeNo();
+  }
+});
+
+noBtn.addEventListener("touchstart", escapeNo);
+document.addEventListener("touchmove", (e) => {
+    const touch = e.touches[0]; // first finger
+    const rect = noBtn.getBoundingClientRect();
+    const distanceX = Math.abs(touch.clientX - (rect.left + rect.width/2));
+    const distanceY = Math.abs(touch.clientY - (rect.top + rect.height/2));
+    const triggerDistance = 120;
+
+    if(distanceX < triggerDistance && distanceY < triggerDistance){
+        escapeNo();
+    }
+});
+
+
+  
+  /* NO button escape when cursor comes near */
+  function escapeNo() {
+    const maxX = box.clientWidth - noBtn.offsetWidth;
+    const maxY = box.clientHeight - noBtn.offsetHeight;
+
+    noBtn.style.left = Math.random() * maxX + "50px";
+    noBtn.style.top = Math.random() * maxY + "50px";
+  }
+
+  box.addEventListener("mousemove", (e) => {
+    const rect = noBtn.getBoundingClientRect();
+    const distanceX = Math.abs(e.clientX - (rect.left + rect.width / 2));
+    const distanceY = Math.abs(e.clientY - (rect.top + rect.height / 2));
+
+    const triggerDistance = 150; // escape sensitivity
+
+    if (distanceX < triggerDistance && distanceY < triggerDistance) {
+      escapeNo();
+    }
+  });
+
+  noBtn.addEventListener("touchstart", escapeNo);
+
+  function escapeButton() {
+    const maxX = box.clientWidth - noBtn.offsetWidth;
+    const maxY = box.clientHeight - noBtn.offsetHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
+
+  // Escape ONLY when trying to interact
+  //noBtn.addEventListener("mouseenter", escapeButton);
+  //noBtn.addEventListener("mousedown", escapeButton);
+  //noBtn.addEventListener("touchstart", escapeButton);
+
+  yesBtn.addEventListener("click", () => {
+    main.style.display = "none";
+    result.style.display = "block";
+  });
+
+  // Floating hearts
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 300);
+</script>
+
+</body>
+</html>
